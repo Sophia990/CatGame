@@ -2,18 +2,26 @@
 
 #pragma once
 
+#include "VitalsComponent.h"
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
+#include "CatGameCharacter.h"
+#include "PreyActor.h"
 #include "CatCharacter.generated.h"
 
 UCLASS()
-class CATGAME_API ACatCharacter : public ACharacter
+class CATGAME_API ACatCharacter : public ACatGameCharacter
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
 	ACatCharacter();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Vitals")
+	TObjectPtr<UVitalsComponent> Vitals;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Cat")
+	TObjectPtr<APreyActor> CarriedPrey;
 
 protected:
 	// Called when the game starts or when spawned

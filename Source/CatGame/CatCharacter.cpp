@@ -8,7 +8,7 @@ ACatCharacter::ACatCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	Vitals = CreateDefaultSubobject<UVitalsComponent>(TEXT("Vitals"));
 }
 
 // Called when the game starts or when spawned
