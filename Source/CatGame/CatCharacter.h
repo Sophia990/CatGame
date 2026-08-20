@@ -23,6 +23,29 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Cat")
 	TObjectPtr<APreyActor> CarriedPrey;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Vitals")
+	int32 MaxLives = 3;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Vitals")
+	int32 Lives = 3;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	float BiteInvulnerabilityDuration = 1.25f;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	float BiteLaunchSpeed = 800.f;
+	bool bIsBiteInvulnerable = false;
+	FTimerHandle BiteInvulnerabilityTimer;
+
+	UFUNCTION(BlueprintCallable, Category = "Combat")
+	void TakeBite(AActor* AttackingDog);
+
+	UFUNCTION(BlueprintCallable, Category = "Combat")
+	void EndBiteInvulnerability();
+
+	UFUNCTION(BlueprintCallable, Category = "Cat")
+	void DropCarriedPrey();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

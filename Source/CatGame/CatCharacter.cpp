@@ -32,3 +32,43 @@ void ACatCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 
 }
 
+void ACatCharacter::TakeBite(AActor* AttackingDog)
+{
+	if (bIsBiteInvulnerable || Lives <= 0) return;
+
+	Lives--;
+	
+	DropCarriedPrey();
+
+	if (AttackingDog)
+	{
+		const FVector Away = (GetActorLocation() - AttackingDog->GetActorLocation()).GetSafeNormal();
+		LaunchCharacter(Away * BiteLaunchSpeed + FVector(0.f, 0.f, 300.f), true, true);
+	}
+
+	bIsBiteInvulnerable = true;
+	GetWorldTimerManager().SetTimer(
+		BiteInvulnerabilityTimer,
+		this,
+		&ACatCharacter::EndBiteInvulnerability,
+		BiteInvulnerabilityDuration,
+		false);
+
+	if (Lives <= 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Out of lives"));
+	}
+}
+
+void ACatCharacter::EndBiteInvulnerability()
+{
+	bIsBiteInvulnerable = false;
+}
+
+void ACatCharacter::DropCarriedPrey()
+{
+	if (!CarriedPrey) return;
+
+	CarriedPrey->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+	CarriedPrey = nullptr;
+}
