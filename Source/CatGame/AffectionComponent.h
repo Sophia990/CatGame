@@ -17,6 +17,10 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(
 	int32, ThresholdIndex
 );
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(
+	FOnHighestThresholdReached
+);
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class CATGAME_API UAffectionComponent : public UActorComponent
 {
@@ -40,6 +44,9 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category = "Affection")
 	FOnAffectionThresholdReached OnAffectionThresholdReached;
+
+	UPROPERTY(BlueprintAssignable, Category = "Affection")
+	FOnHighestThresholdReached OnHighestThresholdReached;
 	
 	UPROPERTY(EditAnywhere, Category = "Affection")
 	TArray<float> Thresholds;

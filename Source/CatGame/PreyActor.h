@@ -30,8 +30,20 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Prey")
 	float FoodValue = 25.f;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Prey")
+	float GroundTraceDistance = 1000.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Prey")
+	float GroundOffset = 0.f;
+
 	UFUNCTION(BlueprintCallable, Category = "Prey")
 	void GetCaught();
+
+	UFUNCTION(BlueprintCallable, Category = "Prey")
+	void Release();
+
+	UFUNCTION(BlueprintCallable, Category = "Prey")
+	void SnapToGround(AActor* IgnoredActor = nullptr);
 
 	UFUNCTION(BlueprintPure, Category = "Prey")
 	bool IsCarried() const { return bIsCarried; }

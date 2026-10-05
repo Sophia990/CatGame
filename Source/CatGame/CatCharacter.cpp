@@ -2,6 +2,7 @@
 
 
 #include "CatCharacter.h"
+#include "Engine/World.h"
 
 // Sets default values
 ACatCharacter::ACatCharacter()
@@ -37,14 +38,6 @@ void ACatCharacter::TakeBite(AActor* AttackingDog)
 	if (bIsBiteInvulnerable || Lives <= 0) return;
 
 	Lives--;
-	
-	DropCarriedPrey();
-
-	if (AttackingDog)
-	{
-		const FVector Away = (GetActorLocation() - AttackingDog->GetActorLocation()).GetSafeNormal();
-		LaunchCharacter(Away * BiteLaunchSpeed + FVector(0.f, 0.f, 300.f), true, true);
-	}
 
 	bIsBiteInvulnerable = true;
 	GetWorldTimerManager().SetTimer(
@@ -53,10 +46,13 @@ void ACatCharacter::TakeBite(AActor* AttackingDog)
 		&ACatCharacter::EndBiteInvulnerability,
 		BiteInvulnerabilityDuration,
 		false);
+	
+	DropCarriedPrey();
 
 	if (Lives <= 0)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Out of lives"));
+		OnOutOfLives.Broadcast();
 	}
 }
 
@@ -69,6 +65,10 @@ void ACatCharacter::DropCarriedPrey()
 {
 	if (!CarriedPrey) return;
 
-	CarriedPrey->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+	APreyActor* DroppedPrey = CarriedPrey;
 	CarriedPrey = nullptr;
+
+	DroppedPrey->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+	DroppedPrey->SnapToGround(this);
+	DroppedPrey->Release();
 }

@@ -57,6 +57,10 @@ void UAffectionComponent::CheckThresholds(float NewValue)
 		if (NewValue < Thresholds[i]) break;
 		HighestThresholdReached = i;
 		OnAffectionThresholdReached.Broadcast(i);
+		if (i == Thresholds.Num() - 1)
+		{
+			OnHighestThresholdReached.Broadcast();
+		}
 	}
 }
 
