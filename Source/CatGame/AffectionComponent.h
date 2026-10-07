@@ -37,7 +37,7 @@ public:
 	float MaxAffection = 100.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Affection")
-	float DecayPerSecond = 0.3f;
+	float DecayPerSecond = 0.f;
 
 	UPROPERTY(BlueprintAssignable, Category = "Affection")
 	FOnAffectionChanged OnAffectionChanged;

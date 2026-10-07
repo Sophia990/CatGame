@@ -24,10 +24,10 @@ public:
 	UVitalsComponent();
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Vitals")
-	float MaxFullness = 100.f;
+	float MaxFullness = 200.f;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Vitals")
-	float CurrentFullness = 100.f;
+	float CurrentFullness = 200.f;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Vitals")
 	float DrainPerSecond = 2.f;

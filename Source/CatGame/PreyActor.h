@@ -28,7 +28,7 @@ public:
 	TObjectPtr<USphereComponent> NoticeSphere;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Prey")
-	float FoodValue = 25.f;
+	float FoodValue = 50.f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Prey")
 	float GroundTraceDistance = 1000.f;
