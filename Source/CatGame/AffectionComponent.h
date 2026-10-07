@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -27,7 +25,6 @@ class CATGAME_API UAffectionComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:	
-	// Sets default values for this component's properties
 	UAffectionComponent();
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Affection")
@@ -61,7 +58,6 @@ public:
 	float GetAffectionPercent() const;
 
 protected:
-	// Called when the game starts
 	virtual void BeginPlay() override;
 
 	void SetAffection(float NewValue);
@@ -71,7 +67,6 @@ protected:
 	float GetDecayFloor() const;
 
 public:	
-	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 		

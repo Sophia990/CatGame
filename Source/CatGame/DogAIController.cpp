@@ -1,9 +1,5 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "DogAIController.h"
 #include "CatCharacter.h"
-#include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AIPerceptionTypes.h"
@@ -41,7 +37,7 @@ void ADogAIController::BeginPlay()
 	{
 		if (APawn* Dog = GetPawn())
 		{
-			BB->SetValueAsVector(TEXT("HomeLocation"), Dog->GetActorLocation());
+			BB->SetValueAsVector(DogBlackboardKeys::HomeLocation, Dog->GetActorLocation());
 		}
 	}
 
@@ -55,7 +51,7 @@ void ADogAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	UBlackboardComponent* BB = GetBlackboardComponent();
-	if (!BB || !BB->GetValueAsObject(TEXT("TargetCat")))
+	if (!BB || !BB->GetValueAsObject(DogBlackboardKeys::TargetCat))
 	{
 		GetWorldTimerManager().ClearTimer(PerchGiveUpTimerHandle);
 		return;
@@ -67,7 +63,7 @@ void ADogAIController::Tick(float DeltaTime)
 			GetWorldTimerManager().SetTimer(
 				PerchGiveUpTimerHandle,
 				this,
-				&ADogAIController::GiveUpChase,  // same ClearValue(TargetCat)
+				&ADogAIController::GiveUpChase,
 				PerchGiveUpDelay,
 				false);
 		}
@@ -89,7 +85,7 @@ void ADogAIController::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stim
 	if (Stimulus.WasSuccessfullySensed())
 	{
 		GetWorldTimerManager().ClearTimer(GiveUpTimerHandle);
-		BB->SetValueAsObject(TEXT("TargetCat"), Cat);
+		BB->SetValueAsObject(DogBlackboardKeys::TargetCat, Cat);
 	} else
 	{
 		GetWorldTimerManager().SetTimer(
@@ -104,7 +100,7 @@ void ADogAIController::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stim
 bool ADogAIController::CatIsUnreachable()
 {
 	const UBlackboardComponent* BB = GetBlackboardComponent();
-	const AActor* Cat = BB ? Cast<AActor>(BB->GetValueAsObject(TEXT("TargetCat"))) : nullptr;
+	const AActor* Cat = BB ? Cast<AActor>(BB->GetValueAsObject(DogBlackboardKeys::TargetCat)) : nullptr;
 	if (!Cat) return false;
 
 	UNavigationSystemV1* NavSys = FNavigationSystem::GetCurrent<UNavigationSystemV1>(GetWorld());
@@ -119,6 +115,6 @@ void ADogAIController::GiveUpChase()
 {
 	if (UBlackboardComponent* BB = GetBlackboardComponent())
 	{
-		BB->ClearValue(TEXT("TargetCat"));
+		BB->ClearValue(DogBlackboardKeys::TargetCat);
 	}
 }

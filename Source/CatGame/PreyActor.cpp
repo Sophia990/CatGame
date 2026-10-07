@@ -1,16 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "PreyActor.h"
-
 #include "Components/SphereComponent.h"
 #include "Components/PrimitiveComponent.h"
 #include "Components/MeshComponent.h"
 
-// Sets default values
 APreyActor::APreyActor()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	CatchSphere = CreateDefaultSubobject<USphereComponent>(TEXT("CatchSpere"));
@@ -26,7 +20,6 @@ APreyActor::APreyActor()
 	Mesh->SetupAttachment(CatchSphere);
 }
 
-// Called when the game starts or when spawned
 void APreyActor::BeginPlay()
 {
 	Super::BeginPlay();
@@ -34,7 +27,6 @@ void APreyActor::BeginPlay()
 	SnapToGround();
 }
 
-// Called every frame
 void APreyActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);

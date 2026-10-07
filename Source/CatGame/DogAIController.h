@@ -1,18 +1,18 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
 #include "AIController.h"
 #include "DogAIController.generated.h"
 
-/**
- * 
- */
-
 class UAIPerceptionComponent;
 class UAISenseConfig_Sight;
 class UBehaviorTree;
+
+namespace DogBlackboardKeys
+{
+	inline const FName TargetCat = TEXT("TargetCat");
+	inline const FName HomeLocation = TEXT("HomeLocation");
+}
 
 UCLASS()
 class CATGAME_API ADogAIController : public AAIController

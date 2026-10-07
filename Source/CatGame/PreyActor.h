@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -15,7 +13,6 @@ class CATGAME_API APreyActor : public AActor
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
 	APreyActor();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Prey")
@@ -49,14 +46,12 @@ public:
 	bool IsCarried() const { return bIsCarried; }
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Prey")
 	bool bIsCarried = false;
 
 public:	
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 };
